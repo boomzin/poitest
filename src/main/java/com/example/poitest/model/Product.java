@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class Product implements Persistable<Integer> {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     public void setId(Integer id) {
@@ -24,12 +24,12 @@ public class Product implements Persistable<Integer> {
     }
 
     @Column(name = "vendor_code")
-    @Size(min = 2, max = 128)
+    @Size(min = 2, max = 64)
     @NotBlank
     private String vendorCode;
 
     @Column(name = "name")
-    @Size(min = 2, max = 128)
+    @Size(min = 2, max = 256)
     @NotBlank
     private String name;
 
@@ -40,8 +40,8 @@ public class Product implements Persistable<Integer> {
 
     @Column(name = "price")
 //    https://www.baeldung.com/javax-bigdecimal-validation
-    @DecimalMin(value = "0.0", inclusive = false)
-    @Digits(integer=4, fraction=2)
+    @DecimalMin(value = "0.0")
+    @Digits(integer=8, fraction=2)
     private BigDecimal price;
 
 
@@ -70,5 +70,37 @@ public class Product implements Persistable<Integer> {
     @Override
     public int hashCode() {
         return id == null ? 0 : id;
+    }
+
+    public void setVendorCode(String vendorCode) {
+        this.vendorCode = vendorCode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getVendorCode() {
+        return vendorCode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
     }
 }
